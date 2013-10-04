@@ -96,6 +96,16 @@ public class ManagedSocket implements Socket {
     }
 
     @Override
+    public void setSendBufferSize(int size) {
+        ZMQ.zmq_setsockopt(address, SocketOptions.SNDBUF.getValue(), size);
+    }
+
+    @Override
+    public void setReceiveBufferSize(int size) {
+        ZMQ.zmq_setsockopt(address, SocketOptions.RCVBUF.getValue(), size);
+    }
+
+    @Override
     public void close() {
         if (!ZMQ.zmq_close(address)) {
             int errno = ZMQ.zmq_errno();

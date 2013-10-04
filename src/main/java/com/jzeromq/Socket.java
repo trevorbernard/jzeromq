@@ -32,4 +32,8 @@ public interface Socket extends Closeable {
 
     public void unsubscribe(byte[] data);
 
+    public void setSendBufferSize(int size);
+
+    public void setReceiveBufferSize(int size);
+
 }
