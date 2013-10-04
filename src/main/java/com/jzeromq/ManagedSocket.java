@@ -56,13 +56,13 @@ public class ManagedSocket implements Socket {
     }
 
     @Override
-    public void recieve(ByteBuffer bb, int flags) {
-        ZMQ.zmq_recv(address, bb, flags);
+    public int receive(ByteBuffer bb, int flags) {
+        return ZMQ.zmq_recv(address, bb, flags);
     }
 
     @Override
-    public void recieve(byte[] buf, int offset, int length, int flags) {
-        ZMQ.zmq_recv(address, buf, offset, length, flags);
+    public int recieve(byte[] buf, int offset, int length, int flags) {
+        return ZMQ.zmq_recv(address, buf, offset, length, flags);
     }
 
     @Override
