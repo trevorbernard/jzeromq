@@ -2,6 +2,7 @@ package com.jzeromq;
 
 import java.io.Closeable;
 import java.nio.ByteBuffer;
+import java.util.concurrent.TimeUnit;
 
 public interface Socket extends Closeable {
     public SocketType getType();
@@ -49,6 +50,8 @@ public interface Socket extends Closeable {
     public boolean hasReceiveMore();
 
     public void setIdentity(byte[] identity);
+
+    public void setLinger(long delay, TimeUnit unit);
 
     public void close();
 }

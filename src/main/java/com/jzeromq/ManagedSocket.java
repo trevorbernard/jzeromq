@@ -1,6 +1,7 @@
 package com.jzeromq;
 
 import java.nio.ByteBuffer;
+import java.util.concurrent.TimeUnit;
 
 import org.zeromq.jni.ZMQ;
 
@@ -139,6 +140,12 @@ public class ManagedSocket implements Socket {
     @Override
     public void setReceiveHWM(int size) {
         ZMQ.zmq_setsockopt(address, SocketOptions.RCVHWM.getValue(), size);
+    }
+
+    @Override
+    public void setLinger(long delay, TimeUnit unit) {
+        long linger = TimeUnit.MILLISECONDS.convert(delay, unit);
+        ZMQ.zmq_setsockopt(address, SocketOptions.LINGER.getValue(), linger);
     }
 
     @Override
