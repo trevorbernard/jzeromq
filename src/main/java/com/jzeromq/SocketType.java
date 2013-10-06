@@ -1,8 +1,11 @@
 package com.jzeromq;
 
+import org.zeromq.jni.ZMQ;
+
 public enum SocketType {
 
-    PAIR(0), PUB(1), SUB(2), REQ(3), REP(4), DEALER(5), ROUTER(6), PULL(7), PUSH(8), XPUB(9), XSUB(10), XREQ(5), XREP(6);
+    PAIR(ZMQ.PAIR), PUB(ZMQ.PUB), SUB(ZMQ.SUB), REQ(ZMQ.REQ), REP(ZMQ.REP), DEALER(ZMQ.DEALER), ROUTER(ZMQ.ROUTER), PULL(
+            ZMQ.PULL), PUSH(ZMQ.PUSH), XPUB(ZMQ.XPUB), XSUB(ZMQ.XSUB), XREQ(ZMQ.XREQ), XREP(ZMQ.XREP);
 
     private final int value;
 
