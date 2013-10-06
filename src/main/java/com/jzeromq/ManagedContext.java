@@ -2,7 +2,6 @@ package com.jzeromq;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.zeromq.jni.ZMQ;
 
@@ -40,7 +39,7 @@ public class ManagedContext implements Context {
     @Override
     public void close() {
         for (Socket s : sockets) {
-            s.setLinger(0, TimeUnit.MILLISECONDS);
+            s.setLinger(0);
             s.close();
         }
         sockets.clear();
