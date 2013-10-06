@@ -8,4 +8,6 @@ public interface Context extends Closeable {
     public void setIOThreads(int threads);
     
     public Socket createSocket(SocketType type);
+    
+    public void close();
 }

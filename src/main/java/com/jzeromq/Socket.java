@@ -14,10 +14,12 @@ public interface Socket extends Closeable {
 
     public int send(ByteBuffer bb, int flags);
 
+    public byte[] receive();
+
     public byte[] receive(int flags);
 
     public int receive(ByteBuffer bb, int flags);
-    
+
     public int recieve(byte[] buf, int offset, int length, int flags);
 
     public void connect(String endpoint);
@@ -36,5 +38,9 @@ public interface Socket extends Closeable {
 
     public void setReceiveBufferSize(int size);
 
+    public boolean hasReceiveMore();
 
+    public void setIdentity(byte[] identity);
+
+    public void close();
 }

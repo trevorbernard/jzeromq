@@ -51,6 +51,11 @@ public class ManagedSocket implements Socket {
     }
 
     @Override
+    public byte[] receive() {
+        return receive(0);
+    }
+
+    @Override
     public byte[] receive(int flags) {
         return ZMQ.zmq_recv(address, flags);
     }
@@ -96,6 +101,11 @@ public class ManagedSocket implements Socket {
     }
 
     @Override
+    public boolean hasReceiveMore() {
+        return 1 == ZMQ.zmq_getsockopt_int(address, SocketOptions.RCVMORE.getValue());
+    }
+
+    @Override
     public void setSendBufferSize(int size) {
         ZMQ.zmq_setsockopt(address, SocketOptions.SNDBUF.getValue(), size);
     }
@@ -103,6 +113,13 @@ public class ManagedSocket implements Socket {
     @Override
     public void setReceiveBufferSize(int size) {
         ZMQ.zmq_setsockopt(address, SocketOptions.RCVBUF.getValue(), size);
+    }
+
+    @Override
+    public void setIdentity(byte[] identity) {
+        if (identity.length < 1 || identity.length > 255)
+            throw new IllegalArgumentException("Identity must be at least 1 byte and at most 255");
+        ZMQ.zmq_setsockopt(address, SocketOptions.IDENTITY.getValue(), identity);
     }
 
     @Override
@@ -114,5 +131,4 @@ public class ManagedSocket implements Socket {
             }
         }
     }
-
 }
