@@ -44,8 +44,8 @@ public class ZMQTest {
             ByteBuffer bb = ByteBuffer.allocateDirect(10);
             bb.put("helloworld".getBytes());
             bb.flip();
-            push.send(bb, 0);
-            byte[] recv = pull.receive(0);
+            push.send(bb);
+            byte[] recv = pull.receive();
             assertEquals("helloworld", new String(recv));
         } finally {
             try {
@@ -68,7 +68,7 @@ public class ZMQTest {
             push.send("helloworld".getBytes());
 
             ByteBuffer bb = ByteBuffer.allocateDirect(10);
-            pull.receive(bb, 0);
+            pull.receive(bb);
             bb.flip();
             byte[] buf = new byte[10];
             bb.get(buf);

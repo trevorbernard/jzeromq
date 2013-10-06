@@ -41,6 +41,7 @@ public class ManagedContext implements Context {
         for (Socket s : sockets) {
             s.close();
         }
+        sockets.clear();
         if (!ZMQ.zmq_ctx_destroy(address)) {
             final int errno = ZMQ.zmq_errno();
             if (ZMQ.ETERM == errno) {

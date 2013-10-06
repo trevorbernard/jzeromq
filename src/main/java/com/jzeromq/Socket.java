@@ -12,11 +12,15 @@ public interface Socket extends Closeable {
 
     public int send(byte[] buf);
 
+    public int send(ByteBuffer bb);
+
     public int send(ByteBuffer bb, int flags);
 
     public byte[] receive();
 
     public byte[] receive(int flags);
+
+    public int receive(ByteBuffer bb);
 
     public int receive(ByteBuffer bb, int flags);
 

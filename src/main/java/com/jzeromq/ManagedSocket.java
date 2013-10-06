@@ -45,6 +45,11 @@ public class ManagedSocket implements Socket {
     }
 
     @Override
+    public int send(ByteBuffer bb) {
+        return send(bb, 0);
+    }
+
+    @Override
     public int send(ByteBuffer bb, int flags) {
         return ZMQ.zmq_send(address, bb, flags);
     }
@@ -57,6 +62,11 @@ public class ManagedSocket implements Socket {
     @Override
     public byte[] receive(int flags) {
         return ZMQ.zmq_recv(address, flags);
+    }
+
+    @Override
+    public int receive(ByteBuffer bb) {
+        return receive(bb, 0);
     }
 
     @Override
