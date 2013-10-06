@@ -13,9 +13,8 @@ public class ManagedSocket implements Socket {
         this.type = type;
         this.address = ZMQ.zmq_socket(context.getAddress(), type.getValue());
         if (this.address == -1) {
-            int errno = ZMQ.zmq_errno();
-            switch (errno) {
-            case 1:
+            final int errno = ZMQ.zmq_errno();
+            if (ZMQ.ENOTSOCK == errno) {
                 throw new InvalidSocketException();
             }
         }
@@ -123,10 +122,20 @@ public class ManagedSocket implements Socket {
     }
 
     @Override
+    public void setSendHWM(int size) {
+        ZMQ.zmq_setsockopt(address, SocketOptions.SNDHWM.getValue(), size);
+    }
+
+    @Override
+    public void setReceiveHWM(int size) {
+        ZMQ.zmq_setsockopt(address, SocketOptions.RCVHWM.getValue(), size);
+    }
+
+    @Override
     public void close() {
         if (!ZMQ.zmq_close(address)) {
-            int errno = ZMQ.zmq_errno();
-            if (errno == 1) {
+            final int errno = ZMQ.zmq_errno();
+            if (ZMQ.ENOTSOCK == errno) {
                 throw new InvalidSocketException();
             }
         }

@@ -38,6 +38,10 @@ public interface Socket extends Closeable {
 
     public void setReceiveBufferSize(int size);
 
+    public void setSendHWM(int size);
+
+    public void setReceiveHWM(int size);
+
     public boolean hasReceiveMore();
 
     public void setIdentity(byte[] identity);

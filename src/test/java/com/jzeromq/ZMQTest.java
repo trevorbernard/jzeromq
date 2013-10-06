@@ -13,10 +13,10 @@ public class ZMQTest extends TestCase {
         try {
             context = ZMQ.context(1);
             Socket push = ZMQ.socket(context, SocketType.PUSH);
-            push.connect("tcp://127.0.0.1:6009");
+            push.connect("tcp://127.0.0.1:7001");
 
             Socket pull = ZMQ.socket(context, SocketType.PULL);
-            pull.bind("tcp://*:6009");
+            pull.bind("tcp://*:7001");
 
             push.send("helloworld".getBytes());
             byte[] recv = pull.receive();
@@ -37,10 +37,10 @@ public class ZMQTest extends TestCase {
         try {
             context = ZMQ.context(1);
             Socket push = ZMQ.socket(context, SocketType.PUSH);
-            push.connect("tcp://127.0.0.1:6002");
+            push.connect("tcp://127.0.0.1:7002");
 
             Socket pull = ZMQ.socket(context, SocketType.PULL);
-            pull.bind("tcp://*:6002");
+            pull.bind("tcp://*:7002");
             ByteBuffer bb = ByteBuffer.allocateDirect(10);
             bb.put("helloworld".getBytes());
             bb.flip();
@@ -61,10 +61,10 @@ public class ZMQTest extends TestCase {
         try {
             context = ZMQ.context(1);
             Socket push = ZMQ.socket(context, SocketType.PUSH);
-            push.connect("tcp://127.0.0.1:6003");
+            push.connect("tcp://127.0.0.1:7003");
 
             Socket pull = ZMQ.socket(context, SocketType.PULL);
-            pull.bind("tcp://*:6003");
+            pull.bind("tcp://*:7003");
             push.send("helloworld".getBytes());
 
             ByteBuffer bb = ByteBuffer.allocateDirect(10);
@@ -81,6 +81,11 @@ public class ZMQTest extends TestCase {
         }
     }
 
+    public void testCloseContextTwice() {
+        Context context = ZMQ.context(1);
+        context.close();
+        context.close();
+    }
     // @Test
     // public void testSetIdentity() {
     // Context context = null;

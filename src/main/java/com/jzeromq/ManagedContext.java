@@ -6,9 +6,6 @@ import java.util.List;
 import org.zeromq.jni.ZMQ;
 
 public class ManagedContext implements Context {
-    public static final int IO_THREADS = 1;
-    public static final int MAX_SOCKETS = 2;
-
     private final List<Socket> sockets = new ArrayList<Socket>();
 
     private final long address;
@@ -24,12 +21,12 @@ public class ManagedContext implements Context {
 
     @Override
     public int getIOThreads() {
-        return ZMQ.zmq_ctx_get(address, IO_THREADS);
+        return ZMQ.zmq_ctx_get(address, ContextType.IO_THREADS.getValue());
     }
 
     @Override
     public void setIOThreads(int ioThreads) {
-        ZMQ.zmq_ctx_set(address, IO_THREADS, ioThreads);
+        ZMQ.zmq_ctx_set(address, ContextType.IO_THREADS.getValue(), ioThreads);
     }
 
     @Override
@@ -45,8 +42,8 @@ public class ManagedContext implements Context {
             s.close();
         }
         if (!ZMQ.zmq_ctx_destroy(address)) {
-            int errno = ZMQ.zmq_errno();
-            if (errno == 1) {
+            final int errno = ZMQ.zmq_errno();
+            if (ZMQ.ETERM == errno) {
                 throw new InvalidContextException();
             }
         }
