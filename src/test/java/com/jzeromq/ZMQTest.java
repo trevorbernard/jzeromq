@@ -2,11 +2,11 @@ package com.jzeromq;
 
 import java.nio.ByteBuffer;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class ZMQTest extends TestCase {
+public class ZMQTest {
     @Test
     public void testPushPull() {
         Context context = null;
@@ -81,23 +81,34 @@ public class ZMQTest extends TestCase {
         }
     }
 
-    public void testCloseContextTwice() {
-        Context context = ZMQ.context(1);
-        context.close();
-        context.close();
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetIdentityTooSmall() {
+        Context context = null;
+        try {
+            context = ZMQ.context(1);
+            Socket req = ZMQ.socket(context, SocketType.REQ);
+            req.setIdentity(new byte[0]);
+        } finally {
+            try {
+                context.close();
+            } catch (Exception e) {
+            }
+        }
     }
-    // @Test
-    // public void testSetIdentity() {
-    // Context context = null;
-    // try {
-    // context = ZMQ.context(1);
-    // Socket req = ZMQ.socket(context, SocketType.REQ);
-    // req.setIdentity(new byte[0]);
-    // } finally {
-    // try {
-    // context.close();
-    // } catch (Exception e) {
-    // }
-    // }
-    // }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetIdentityTooLarge() {
+        Context context = null;
+        try {
+            context = ZMQ.context(1);
+            Socket req = ZMQ.socket(context, SocketType.REQ);
+            req.setIdentity(new byte[256]);
+        } finally {
+            try {
+                context.close();
+            } catch (Exception e) {
+            }
+        }
+    }
+
 }
