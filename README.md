@@ -2,7 +2,13 @@
 
 A modern Java ZeroMQ binding
 
-# License
+## TODO
+
+* Add Poller support
+
+* Add Monitor support
+
+## License
 
 Copyright © 2013 Trevor Bernard
 
