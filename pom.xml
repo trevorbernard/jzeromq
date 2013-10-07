@@ -10,7 +10,7 @@
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
-      <groupId>org.zeromq</groupId>
+      <groupId>com.jzeromq</groupId>
       <artifactId>zmq-jni</artifactId>
       <version>0.1.0-SNAPSHOT</version>
     </dependency>
